@@ -7,5 +7,7 @@ export class BasePage {
     title = Selector(".header")
     firstPhoto = Selector(".photo")
     attempts = Selector(".attempts")
+    correct = Selector(".correct")
+    streak = Selector(".streak")
 
 }

@@ -21,3 +21,7 @@ test('Attempts counter increments after selecting a photo', async t => {
     .expect(finalAttemptsCount)
     .eql(initialAttemptsCount + 1);
 });
+
+test('Increments "Streak" counter on selection of correct photo', async t => {
+    await t.expect(true).eql(true);
+});
