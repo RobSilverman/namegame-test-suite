@@ -9,5 +9,6 @@ export class BasePage {
     attempts = Selector(".attempts")
     correct = Selector(".correct")
     streak = Selector(".streak")
+    correctName = Selector("#name")
 
 }

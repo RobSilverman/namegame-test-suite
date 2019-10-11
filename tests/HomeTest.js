@@ -11,7 +11,7 @@ test('Correct title displays', async t => {
 });
 
 test('Attempts counter increments after selecting a photo', async t => {
-    const initialAttemptsCount = Number(await page.attempts.textContent)
+    const initialAttemptsCount = Number(await page.attempts.textContent);
     
     await t.click(page.firstPhoto);
 
@@ -23,5 +23,11 @@ test('Attempts counter increments after selecting a photo', async t => {
 });
 
 test('Increments "Streak" counter on selection of correct photo', async t => {
-    await t.expect(true).eql(true);
+    const initialStreakCount = Number(await page.streak.textContent);
+    const searchName = await page.correctName.textContent;
+    
+    await t.click(page.firstPhoto.withText(searchName));
+
+    const finalStreakCount =Number(await page.streak.textContent);
+    await t.expect(initialStreakCount + 1).eql(finalStreakCount);
 });
