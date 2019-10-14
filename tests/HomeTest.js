@@ -24,8 +24,11 @@ test('Attempts counter increments after selecting a photo', async t => {
 
 test('Increments "Streak" counter on selection of correct photo', async t => {
     const initialStreakCount = Number(await page.streak.textContent);
+
+    // Sets a const equal to the name held in the #name <span>
     const searchName = await page.correctName.textContent;
     
+    // Since 'firstPhoto' actually matches all five photos, this uses .withText to filter down to the correct photo
     await t.click(page.firstPhoto.withText(searchName));
 
     const finalStreakCount = Number(await page.streak.textContent);
@@ -45,12 +48,14 @@ test('Resets "Streak" counter to 0 on selection of incorrect photo', async t => 
     // best practices raises the question in this instance of whether tests should be contingent on the success of other tests.
 
     // I hope the code below shows some proficiency in the quick adoption of new tools, and that my admission of my own lack of knowledge 
-    // of best practices is enterpreted as the willingness to learn that it is raised in the spirit of.
+    // of best practices is seen as the willingness to learn that it is raised in the spirit of.
+
     var searchName = await page.correctName.textContent;
     await t.click(page.firstPhoto.withText(searchName));
 
     var searchName = await page.correctName.textContent;
 
+    // Clicks on either 2nd or 1st photo depending on whether 1st photo is correct, intentionally selecting the incorrect image
     if (page.firstPhoto.withText(searchName) == page.firstPhoto.nth(0)){
         await t.click(page.firstPhoto.nth(1));
     } else {
@@ -60,3 +65,9 @@ test('Resets "Streak" counter to 0 on selection of incorrect photo', async t => 
     const finalStreakCount = Number(await page.streak.textContent);
     await t.expect(finalStreakCount).eql(0);
 });
+
+// Add test to check that Attempts element increments on any click
+
+// Add test to check that Correct element *does not* increment on incorrect click
+
+// Add test to check that Correct element increments on correct click
