@@ -35,6 +35,17 @@ test('Increments "Streak" counter on selection of correct photo', async t => {
     await t.expect(initialStreakCount + 1).eql(finalStreakCount);
 });
 
+test('Increments "Correct" counter on correct response', async t => {
+    const initialCorrectCount = Number(await page.correct.textContent);
+
+    const searchName = await page.correctName.textContent;
+    
+    await t.click(page.firstPhoto.withText(searchName));
+
+    const finalCorrectCount = Number(await page.correct.textContent);
+    await t.expect(initialCorrectCount + 1).eql(finalCorrectCount);
+});
+
 test('Resets "Streak" counter to 0 on selection of incorrect photo', async t => {
     
     // In creating this test, I added the first searchName + t.click code below with the intent of getting one successful
@@ -66,8 +77,19 @@ test('Resets "Streak" counter to 0 on selection of incorrect photo', async t => 
     await t.expect(finalStreakCount).eql(0);
 });
 
-// Add test to check that Attempts element increments on any click
+test('"Correct" counter *does not* increment or decrease on incorrect response', async t => {
 
-// Add test to check that Correct element *does not* increment on incorrect click
+    const correctCount = Number(await page.correct.textContent);
+    var searchName = await page.correctName.textContent;
 
-// Add test to check that Correct element increments on correct click
+    // Clicks on either 2nd or 1st photo depending on whether 1st photo is correct, intentionally selecting the incorrect image
+    if (page.firstPhoto.withText(searchName) == page.firstPhoto.nth(0)){
+        await t.click(page.firstPhoto.nth(1));
+    } else {
+        await t.click(page.firstPhoto.nth(0));
+    }
+    
+    const endCorrectCount = Number(await page.correct.textContent);
+    await t.expect(correctCount).eql(endCorrectCount);
+});
+
