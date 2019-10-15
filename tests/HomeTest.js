@@ -42,7 +42,7 @@ test('Increments "Correct" counter on correct response', async t => {
     
     await t.click(page.firstPhoto.withText(searchName));
 
-    const finalCorrectCount = Number(await page.correct.textContent);
+    const finalCorrectCount = Number(await page.stats.child(".correct").textContent);
     await t.expect(initialCorrectCount + 1).eql(finalCorrectCount);
 });
 
@@ -66,6 +66,8 @@ test('Resets "Streak" counter to 0 on selection of incorrect photo', async t => 
 
     var searchName = await page.correctName.textContent;
 
+    //t.wait(5000);
+
     // Clicks on either 2nd or 1st photo depending on whether 1st photo is correct, intentionally selecting the incorrect image
     if (page.firstPhoto.withText(searchName) == page.firstPhoto.nth(0)){
         await t.click(page.firstPhoto.nth(1));
@@ -82,6 +84,8 @@ test('"Correct" counter *does not* increment or decrease on incorrect response',
     const correctCount = Number(await page.correct.textContent);
     var searchName = await page.correctName.textContent;
 
+    //console.log(page.firstPhoto.withText(searchName));
+    //console.log(page.firstPhoto.nth(0));
     // Clicks on either 2nd or 1st photo depending on whether 1st photo is correct, intentionally selecting the incorrect image
     if (page.firstPhoto.withText(searchName) == page.firstPhoto.nth(0)){
         await t.click(page.firstPhoto.nth(1));
@@ -89,7 +93,7 @@ test('"Correct" counter *does not* increment or decrease on incorrect response',
         await t.click(page.firstPhoto.nth(0));
     }
     
-    const endCorrectCount = Number(await page.correct.textContent);
+    const endCorrectCount = Number(await page.stats.child(".correct").textContent);
     await t.expect(correctCount).eql(endCorrectCount);
 });
 
