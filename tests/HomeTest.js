@@ -35,7 +35,7 @@ test('Increments "Streak" counter on selection of correct photo', async t => {
     await t.expect(initialStreakCount + 1).eql(finalStreakCount);
 });
 
-test('Increments "Correct" counter on correct response', async t => {
+test('Increments "Correct" counter on selection of correct photo', async t => {
     const initialCorrectCount = Number(await page.correct.textContent);
 
     // Pulls the correct name from the name span, and clicks on whichever displayed photo div contains that text.
@@ -83,7 +83,7 @@ test('Resets "Streak" counter to 0 on selection of incorrect photo', async t => 
     await t.expect(finalStreakCount).eql(0);
 });
 
-test('"Correct" counter *does not* increment or decrease on incorrect response', async t => {
+test('"Correct" counter *does not* increase or decrease on incorrect response', async t => {
 
     const correctCount = Number(await page.correct.textContent);
     var searchName = await page.correctName.textContent;
